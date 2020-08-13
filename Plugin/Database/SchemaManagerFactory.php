@@ -4,12 +4,10 @@ namespace MxcCommons\Plugin\Database;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use MxcCommons\Interop\Container\ContainerInterface;
-use MxcCommons\Plugin\Service\ObjectAugmentationTrait;
-use MxcCommons\ServiceManager\Factory\FactoryInterface;
+use MxcCommons\Plugin\Service\AugmentedObjectFactory;
 
-class SchemaManagerFactory implements FactoryInterface
+class SchemaManagerFactory extends AugmentedObjectFactory
 {
-    use ObjectAugmentationTrait;
     /**
      * Create an object
      *
@@ -23,8 +21,8 @@ class SchemaManagerFactory implements FactoryInterface
         $config = $container->get('config');
         $models = $config['doctrine']['models'] ?? [];
         $attributes = $config['doctrine']['attributes'] ?? [];
-        $attributeManager = $container->get('attributeCrudService');
-        $modelManager = $container->get('modelManager');
+        $attributeManager = $container->get('shopware_attribute.crud_service');
+        $modelManager = $container->get('models');
         $schemaTool = new SchemaTool($modelManager);
         $metaDataCache = $modelManager->getConfiguration()->getMetadataCacheImpl();
         return $this->augment($container, new SchemaManager(
@@ -32,6 +30,7 @@ class SchemaManagerFactory implements FactoryInterface
             $attributes,
             $attributeManager,
             $schemaTool,
-            $metaDataCache));
+            $metaDataCache)
+        );
     }
 }

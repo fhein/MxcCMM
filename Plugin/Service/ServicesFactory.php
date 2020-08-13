@@ -8,10 +8,11 @@ use MxcCommons\Plugin\Database\SchemaManager;
 use MxcCommons\Plugin\Shopware\AuthServiceFactory;
 use MxcCommons\Plugin\Shopware\ConfigurationFactory;
 use MxcCommons\Plugin\Shopware\CrudServiceFactory;
-use MxcCommons\Plugin\Shopware\DbalConnectionFactory;
+use MxcCommons\Plugin\Shopware\dbal_connectionFactory;
 use MxcCommons\Plugin\Shopware\DbFactory;
 use MxcCommons\Plugin\Shopware\MediaServiceFactory;
 use MxcCommons\Plugin\Shopware\ModelManagerFactory;
+use MxcCommons\Plugin\Shopware\ShopwareServicesFactory;
 use MxcCommons\Plugin\Utility\StringUtility;
 use MxcCommons\Log\Formatter\Simple;
 use MxcCommons\Log\Logger;
@@ -22,15 +23,8 @@ class ServicesFactory
 {
     private $serviceConfig = [
         'factories' => [
-            // shopware service interface
-            'db'                        => DbFactory::class,
-            'dbalConnection'            => DbalConnectionFactory::class,
-            'attributeCrudService'      => CrudServiceFactory::class,
-            'mediaManager'              => MediaServiceFactory::class,
-            'modelManager'              => ModelManagerFactory::class,
+            // because we have our own config service, we can not use config to access the Shopware config
             'shopwareConfig'            => ConfigurationFactory::class,
-            'authService'               => AuthServiceFactory::class,
-            'crudService'               => CrudServiceFactory::class,
 
             // services
             Logger::class               => LoggerServiceFactory::class,
@@ -48,7 +42,10 @@ class ServicesFactory
         ],
         'aliases' => [
             'logger' => Logger::class,
-        ]
+        ],
+        'abstract_factories' => [
+            ShopwareServicesFactory::class,
+        ],
     ];
 
     protected function getLogFileName(string $pluginClass) {

@@ -14,7 +14,7 @@ trait ObjectAugmentationTrait {
             $object->setLog($container->get('logger'));
         }
         if ($object instanceof ModelManagerAwareInterface) {
-            $object->setModelManager($container->get('modelManager'));
+            $object->setModelManager($container->get('models'));
         }
         if ($object instanceof ClassConfigAwareInterface) {
             $object->setClassConfig($this->getClassConfig($container, get_class($object)));

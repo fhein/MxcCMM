@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: frank.hein
- * Date: 23.11.2018
- * Time: 12:11
- */
 
 namespace MxcCommons\Plugin\Service;
-
 
 use Throwable;
 use Traversable;
@@ -151,9 +144,7 @@ class Logger implements LoggerInterface
     public function except(Throwable $e, bool $logTrace = true, bool $rethrow = true) {
         $this->emerg(sprintf('%s: %s', get_class($e), $e->getMessage()));
         if ($logTrace) $this->emerg('Call stack: ' . PHP_EOL . $e->getTraceAsString());
-        if ($rethrow)
-            /** @noinspection PhpUnhandledExceptionInspection */
-            throw($e);
+        if ($rethrow) throw($e);
         return $this;
     }
 
