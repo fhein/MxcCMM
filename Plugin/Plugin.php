@@ -29,8 +29,8 @@ class Plugin extends Base
      */
     private function getListeners(string $function, ContainerInterface $services) {
         $config = $services->get('config');
-        $listeners = is_array($config['doctrine']['models']) ? [SchemaManager::class]: [];
-        if (is_array($config['doctrine']['attributes'])) {
+        $listeners = is_array(@$config['doctrine']['models']) ? [SchemaManager::class]: [];
+        if (is_array(@$config['doctrine']['attributes'])) {
             $listeners[] = AttributeManager::class;
         }
         $customListeners = $config['plugin'] ?? [];

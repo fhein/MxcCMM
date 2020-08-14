@@ -2,32 +2,21 @@
 
 namespace MxcCommons;
 
-use Shopware\Components\Plugin;
-use Shopware\Components\Plugin\Context\InstallContext;
-use Shopware\Components\Plugin\Context\ActivateContext;
-use Shopware\Components\Plugin\Context\DeactivateContext;
-use Shopware\Components\Plugin\Context\UninstallContext;
-
+use MxcCommons\Plugin\Plugin;
+use MxcCommons\Plugin\Service\ServicesFactory;
 
 class MxcCommons extends Plugin
 {
-    public function install(InstallContext $context)
+    public const PLUGIN_DIR = __DIR__;
+
+    private static $services;
+
+    public static function getServices()
     {
-
-    }
-
-    public function activate(ActivateContext $context)
-    {
-
-    }
-
-    public function deactivate(DeactivateContext $context)
-    {
-
-    }
-
-    public function uninstall(UninstallContext $context)
-    {
+        if (self::$services !== null) return self::$services;
+        $factory = new ServicesFactory();
+        self::$services = $factory->getServices(__DIR__);
+        return self::$services;
 
     }
 }

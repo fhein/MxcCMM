@@ -5,8 +5,10 @@ namespace MxcCommons\Toolbox\Strings;
 class StringTool
 {
     // makes replaces all commata with dots before converting to float
-    public static function tofloat(string $float)
+    public static function tofloat(?string $float)
     {
+        if (is_float($float)) return $float;
+        if ($float === null) return null;
         return floatval(str_replace(',', '.', $float));
     }
 
