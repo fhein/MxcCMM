@@ -4,6 +4,7 @@
 namespace MxcCommons\Toolbox\Models;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,11 +44,29 @@ trait TrackCreationAndUpdateTrait
         return $this->created;
     }
 
+    public function setCreated($created) {
+        if ($created instanceof DateTimeInterface) {
+            $this->created = $created;
+        } elseif ($created !== null) {
+            // throws on error
+            $this->created = new DateTime($created);
+        }
+    }
+
     /**
      * @return DateTime
      */
     public function getUpdated(): DateTime
     {
         return $this->updated;
+    }
+
+    public function setUpdated($updated) {
+        if ($updated instanceof DateTimeInterface) {
+            $this->updated = $updated;
+        } elseif ($updated !== null) {
+            // throws on error
+            $this->updated = new DateTime($updated);
+        }
     }
 }

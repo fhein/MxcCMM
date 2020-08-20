@@ -10,12 +10,8 @@ use MxcCommons\Plugin\Service\LoggerAwareTrait;
 use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
 use Shopware\Bundle\AttributeBundle\Service\CrudService;
-use Shopware\Components\Plugin\Context\ActivateContext;
-use Shopware\Components\Plugin\Context\DeactivateContext;
 use Shopware\Components\Plugin\Context\InstallContext;
 use Shopware\Components\Plugin\Context\UninstallContext;
-use Shopware\Components\Plugin\Context\UpdateContext;
-
 
 class AttributeManager implements LoggerAwareInterface, ModelManagerAwareInterface
 {
@@ -46,7 +42,6 @@ class AttributeManager implements LoggerAwareInterface, ModelManagerAwareInterfa
      */
     protected $models = [];
 
-    /** @noinspection PhpMissingParentConstructorInspection */
     /**
      * @param array $attributes
      * @param CrudService $attributeService
@@ -94,8 +89,6 @@ class AttributeManager implements LoggerAwareInterface, ModelManagerAwareInterfa
     public function drop() {
         $this->dropAttributes();
     }
-
-
 
     /**
      * Delete the attributes defined in the §attributes member from the database schema

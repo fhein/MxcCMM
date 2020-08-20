@@ -5,6 +5,7 @@ namespace MxcCommons\Plugin\Service;
 use MxcCommons\Plugin\Database\AttributeManager;
 use MxcCommons\Plugin\Database\BulkOperation;
 use MxcCommons\Plugin\Database\SchemaManager;
+use MxcCommons\Plugin\Mail\MailManager;
 use MxcCommons\Plugin\Shopware\AuthServiceFactory;
 use MxcCommons\Plugin\Shopware\ConfigurationFactory;
 use MxcCommons\Plugin\Shopware\CrudServiceFactory;
@@ -34,6 +35,7 @@ class ServicesFactory
         'magicals' => [
             SchemaManager::class,
             AttributeManager::class,
+            MailManager::class,
         ],
         'delegators' => [
             Logger::class => [
