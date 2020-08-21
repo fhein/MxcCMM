@@ -4,10 +4,10 @@ namespace MxcCommons\Plugin\Service;
 
 trait LoggerAwareTrait
 {
-    /** @var LoggerInterface */
+    /** @var Logger */
     protected $log;
 
-    public function setLog(LoggerInterface $log)
+    public function setLog(Logger $log)
     {
         $this->log = $log;
     }

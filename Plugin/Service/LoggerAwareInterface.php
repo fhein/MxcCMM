@@ -4,5 +4,5 @@ namespace MxcCommons\Plugin\Service;
 
 interface LoggerAwareInterface
 {
-    public function setLog(LoggerInterface $log);
+    public function setLog(Logger $log);
 }

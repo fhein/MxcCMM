@@ -2,9 +2,9 @@
 
 namespace MxcCommons\Plugin\Service;
 
-use Shopware\Components\Model\ModelManager;
+use Enlight_Components_Db_Adapter_Pdo_Mysql;
 
 interface DatabaseAwareInterface
 {
-    public function setDatabase($db);
+    public function setDatabase(Enlight_Components_Db_Adapter_Pdo_Mysql $db);
 }
