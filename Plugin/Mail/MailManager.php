@@ -2,14 +2,14 @@
 
 namespace MxcCommons\Plugin\Mail;
 
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use MxcCommons\Toolbox\Config\Config;
 use Shopware\Components\Plugin\Context\InstallContext;
 use Shopware\Components\Plugin\Context\UninstallContext;
 use Shopware\Models\Mail\Mail;
 
-class MailManager implements ModelManagerAwareInterface
+class MailManager implements AugmentedObject
 {
     use ModelManagerAwareTrait;
 

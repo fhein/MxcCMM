@@ -29,10 +29,9 @@ class ServicesFactory
 
             // services
             Logger::class               => LoggerServiceFactory::class,
-            BulkOperation::class        => AugmentedObjectFactory::class,
-
         ],
         'magicals' => [
+            BulkOperation::class,
             SchemaManager::class,
             AttributeManager::class,
             MailManager::class,
@@ -97,7 +96,9 @@ class ServicesFactory
             $config['log'] = $this->getLoggerConfig($pluginName);
         }
         $services->setAllowOverride(true);
-        $services->configure($config['services'] ?? []);
+        if (isset($config['services'])) {
+            $services->configure($config['services']);
+        }
         $config['plugin_config_path'] = $configDir;
         $services->setService('config', $config);
         $services->setService('services', $services);

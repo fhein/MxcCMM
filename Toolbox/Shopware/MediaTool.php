@@ -3,10 +3,9 @@
 namespace MxcCommons\Toolbox\Shopware;
 
 use DateTime;
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Bundle\MediaBundle\MediaService;
 use Shopware\Models\Article\Article;
 use Shopware\Models\Article\Configurator\Option;
@@ -16,7 +15,7 @@ use Shopware\Models\Media\Album;
 use Shopware\Models\Media\Media;
 use Shopware_Components_Auth;
 
-class MediaTool implements LoggerAwareInterface, ModelManagerAwareInterface
+class MediaTool implements AugmentedObject
 {
     use ModelManagerAwareTrait;
     use LoggerAwareTrait;

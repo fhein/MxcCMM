@@ -5,15 +5,14 @@ namespace MxcCommons\Plugin\Database;
 use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\ORM\Tools\SchemaTool;
 use Exception;
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Bundle\AttributeBundle\Service\CrudService;
 use Shopware\Components\Plugin\Context\InstallContext;
 use Shopware\Components\Plugin\Context\UninstallContext;
 
-class AttributeManager implements LoggerAwareInterface, ModelManagerAwareInterface
+class AttributeManager implements AugmentedObject
 {
     use LoggerAwareTrait;
     use ModelManagerAwareTrait;

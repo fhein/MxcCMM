@@ -4,18 +4,10 @@ namespace MxcCommons\Plugin\Database;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use MxcCommons\Interop\Container\ContainerInterface;
-use MxcCommons\Plugin\Service\AugmentedObjectFactory;
+use MxcCommons\ServiceManager\Factory\FactoryInterface;
 
-class AttributeManagerFactory extends AugmentedObjectFactory
+class AttributeManagerFactory implements FactoryInterface
 {
-    /**
-     * Create an object
-     *
-     * @param  ContainerInterface $container
-     * @param  string $requestedName
-     * @param  null|array $options
-     * @return object
-     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
@@ -24,10 +16,11 @@ class AttributeManagerFactory extends AugmentedObjectFactory
         $models = $container->get('models');
         $schemaTool = new SchemaTool($models);
         $metaDataCache = $models->getConfiguration()->getMetadataCacheImpl();
-        return $this->augment($container, new AttributeManager(
+        return new AttributeManager(
             $attributes,
             $attributeManager,
             $schemaTool,
-            $metaDataCache));
+            $metaDataCache
+        );
     }
 }

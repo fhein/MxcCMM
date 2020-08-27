@@ -5,14 +5,13 @@ namespace MxcCommons\Toolbox\Shopware;
 
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Models\Article\Article;
 use Shopware\Models\Category\Category;
 
-class CategoryTool implements LoggerAwareInterface, ModelManagerAwareInterface
+class CategoryTool implements AugmentedObject
 {
     use LoggerAwareTrait;
     use ModelManagerAwareTrait;

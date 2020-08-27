@@ -3,9 +3,9 @@
 namespace MxcCommons\Plugin\Mail;
 
 use MxcCommons\Interop\Container\ContainerInterface;
-use MxcCommons\Plugin\Service\AugmentedObjectFactory;
+use MxcCommons\ServiceManager\Factory\FactoryInterface;
 
-class MailManagerFactory extends AugmentedObjectFactory
+class MailManagerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -19,6 +19,6 @@ class MailManagerFactory extends AugmentedObjectFactory
     {
         $config = $container->get('config');
         $config = @$config['mail_templates'] ?? [];
-        return $this->augment($container, new MailManager($config));
+        return new MailManager($config);
     }
 }

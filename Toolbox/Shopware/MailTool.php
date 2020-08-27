@@ -3,12 +3,12 @@
 namespace MxcCommons\Toolbox\Shopware;
 
 use Enlight_Components_Mail;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Bundle\MailBundle\Service\LogEntryBuilder;
 use Shopware\Models\Order\Order;
 
-class MailTool implements ModelManagerAwareInterface
+class MailTool implements AugmentedObject
 {
     use ModelManagerAwareTrait;
 

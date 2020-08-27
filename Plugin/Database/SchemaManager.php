@@ -6,14 +6,13 @@ use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Exception;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Bundle\AttributeBundle\Service\CrudService;
 use Shopware\Components\Plugin\Context\InstallContext;
 use Shopware\Components\Plugin\Context\UninstallContext;
 
-
-class SchemaManager implements ModelManagerAwareInterface
+class SchemaManager implements AugmentedObject
 {
     use ModelManagerAwareTrait;
 

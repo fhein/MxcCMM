@@ -36,6 +36,7 @@ use function is_string;
 use function spl_autoload_register;
 use function spl_object_hash;
 use function trigger_error;
+use ReflectionClass;
 
 /**
  * Service Manager.
@@ -51,6 +52,8 @@ use function trigger_error;
  *
  * It also provides the ability to inject specific service instances and to
  * define aliases.
+ *
+ * 2020-08-26 object augmentation and classConfig added, FHE
  */
 class ServiceManager implements ServiceLocatorInterface
 {
@@ -359,6 +362,50 @@ class ServiceManager implements ServiceLocatorInterface
         return $this;
     }
 
+    protected function getClassConfig($object): array
+    {
+        $config = $this->get('config');
+        $configPath = $config['plugin_config_path'];
+        // interesting: Reflexion class is faster than string operations in retrieving the class name w/o namespace
+        $configFile = (new ReflectionClass($object))->getShortName() . '.config.php';
+        $filename = $configPath . '/' . $configFile;
+        // we support the phpx extesnion also, temporarily to exclude some config files form code inspection
+        if (! file_exists($filename))
+        {
+            $filename .= 'x';
+            if (! file_exists($filename)) return [];
+        }
+
+        $classConfig = include $filename;
+        if (! is_array($classConfig)) return [];
+        return $classConfig;
+    }
+
+    protected function augment($object)
+    {
+        if (! $object instanceof AugmentedObject) return;
+
+        if (method_exists($object, 'setServices')) {
+            $object->setServices($this);
+        }
+
+        if (method_exists($object, 'setLog')) {
+            $object->setLog($this->get('logger'));
+        }
+        if (method_exists($object, 'setModelManager')) {
+            $object->setModelManager($this->get('models'));
+        }
+        if (method_exists($object, 'setDatabase')) {
+            $object->setDatabase($this->get('db'));
+        }
+        if (method_exists($object, 'setClassConfig')) {
+            $object->setClassConfig($this->getClassConfig($object));
+        }
+        if (method_exists($object, 'init')) {
+            $object->init();
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -388,7 +435,7 @@ class ServiceManager implements ServiceLocatorInterface
         // If the alias is registered as a shared service, we are done.
         if ($sharedService && isset($this->services[$resolvedName])) {
             $this->services[$name] = $this->services[$resolvedName];
-            return $this->services[$resolvedName];
+            return $this->services[$name];
         }
 
         $object = $this->createService($resolvedName, null);
@@ -482,6 +529,7 @@ class ServiceManager implements ServiceLocatorInterface
         foreach ($this->initializers as $initializer) {
             $initializer($this->creationContext, $object);
         }
+        $this->augment($object);
 
         return $object;
     }

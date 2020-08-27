@@ -1,17 +1,15 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 
-
 namespace MxcCommons\Toolbox\Shopware\Filter;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Models\Property\Option;
 use Shopware\Models\Property\Value;
 
-class GroupRepository implements ModelManagerAwareInterface, LoggerAwareInterface
+class GroupRepository implements AugmentedObject
 {
     use ModelManagerAwareTrait;
     use LoggerAwareTrait;

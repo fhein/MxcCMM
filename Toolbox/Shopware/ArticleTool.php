@@ -4,16 +4,15 @@ namespace MxcCommons\Toolbox\Shopware;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Statement;
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Models\Article\Article;
 use Shopware\Models\Article\Detail;
 use Shopware\Models\Article\Repository;
 use Throwable;
 
-class ArticleTool implements LoggerAwareInterface, ModelManagerAwareInterface
+class ArticleTool implements AugmentedObject
 {
     use LoggerAwareTrait;
     use ModelManagerAwareTrait;

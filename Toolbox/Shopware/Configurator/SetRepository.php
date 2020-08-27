@@ -2,14 +2,13 @@
 
 namespace MxcCommons\Toolbox\Shopware\Configurator;
 
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 use Shopware\Models\Article\Configurator\Option;
 use Shopware\Models\Article\Configurator\Set;
 
-class SetRepository implements ModelManagerAwareInterface, LoggerAwareInterface
+class SetRepository implements AugmentedObject
 {
     use ModelManagerAwareTrait;
     use LoggerAwareTrait;

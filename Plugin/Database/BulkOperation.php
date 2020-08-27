@@ -2,12 +2,11 @@
 
 namespace MxcCommons\Plugin\Database;
 
-use MxcCommons\Plugin\Service\LoggerAwareInterface;
 use MxcCommons\Plugin\Service\LoggerAwareTrait;
-use MxcCommons\Plugin\Service\ModelManagerAwareInterface;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
+use MxcCommons\ServiceManager\AugmentedObject;
 
-class BulkOperation implements LoggerAwareInterface, ModelManagerAwareInterface
+class BulkOperation implements AugmentedObject
 {
     use ModelManagerAwareTrait;
     use LoggerAwareTrait;
