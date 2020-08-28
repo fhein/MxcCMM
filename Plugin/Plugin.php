@@ -33,7 +33,7 @@ class Plugin extends Base
         if (is_array(@$config['doctrine']['attributes'])) {
             $listeners[] = AttributeManager::class;
         }
-        $customListeners = $config['plugin'] ?? [];
+        $customListeners = $config['plugin_listeners'] ?? [];
         foreach ($customListeners as $listener) {
             $listeners[] = $listener;
         }

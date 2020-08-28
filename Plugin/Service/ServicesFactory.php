@@ -6,13 +6,7 @@ use MxcCommons\Plugin\Database\AttributeManager;
 use MxcCommons\Plugin\Database\BulkOperation;
 use MxcCommons\Plugin\Database\SchemaManager;
 use MxcCommons\Plugin\Mail\MailManager;
-use MxcCommons\Plugin\Shopware\AuthServiceFactory;
 use MxcCommons\Plugin\Shopware\ConfigurationFactory;
-use MxcCommons\Plugin\Shopware\CrudServiceFactory;
-use MxcCommons\Plugin\Shopware\dbal_connectionFactory;
-use MxcCommons\Plugin\Shopware\DbFactory;
-use MxcCommons\Plugin\Shopware\MediaServiceFactory;
-use MxcCommons\Plugin\Shopware\ModelManagerFactory;
 use MxcCommons\Plugin\Shopware\ShopwareServicesFactory;
 use MxcCommons\Plugin\Utility\StringUtility;
 use MxcCommons\Log\Formatter\Simple;
@@ -96,6 +90,7 @@ class ServicesFactory
             $config['log'] = $this->getLoggerConfig($pluginName);
         }
         $services->setAllowOverride(true);
+        $this->registerPluginListenerServices($config);
         if (isset($config['services'])) {
             $services->configure($config['services']);
         }
@@ -105,6 +100,15 @@ class ServicesFactory
         $services->setAllowOverride(false);
 
         return $services;
+    }
 
+    protected function registerPluginListenerServices(array &$config)
+    {
+        if (empty($config['plugin_listeners'])) return;
+        if (empty($config['services']['magicals'])) {
+            $config['services']['magicals'] = array_unique($config['plugin_listeners']);
+            return;
+        }
+        $config['services']['magicals'] = array_unique(array_merge($config['services']['magicals'], $config['plugin_listeners']));
     }
 }
