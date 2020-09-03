@@ -11,7 +11,7 @@ namespace MxcCommons\Log;
 
 use DateTime;
 use ErrorException;
-use Exception;
+use Throwable;
 use Traversable;
 use MxcCommons\Log\Processor\ProcessorInterface;
 use MxcCommons\Log\Writer\WriterInterface;
@@ -19,6 +19,7 @@ use MxcCommons\ServiceManager\AbstractPluginManager;
 use MxcCommons\ServiceManager\ServiceManager;
 use MxcCommons\Stdlib\ArrayUtils;
 use MxcCommons\Stdlib\SplPriorityQueue;
+use MxcCommons\Log\Exception;
 
 /**
  * Logging messages with a stack of backends
@@ -220,7 +221,7 @@ class Logger implements LoggerInterface
         foreach ($this->writers as $writer) {
             try {
                 $writer->shutdown();
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
             }
         }
     }

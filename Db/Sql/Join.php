@@ -36,7 +36,7 @@ class Join implements Iterator, Countable
      *
      * @var int
      */
-    private $position = 0;
+    private $position;
 
     /**
      * JOIN specifications

@@ -55,6 +55,8 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      */
     protected $isPrepared = false;
 
+    protected $parametersBound = false;
+
     /**
      * @var bool
      */

@@ -31,14 +31,14 @@ abstract class AbstractWriter implements WriterInterface
     /**
      * Filter plugins
      *
-     * @var FilterPluginManager
+     * @var LogFilterPluginManager
      */
     protected $filterPlugins;
 
     /**
      * Formatter plugins
      *
-     * @var FormatterPluginManager
+     * @var LogFormatterPluginManager
      */
     protected $formatterPlugins;
 

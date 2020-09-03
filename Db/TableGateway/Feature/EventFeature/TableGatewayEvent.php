@@ -11,7 +11,7 @@ namespace MxcCommons\Db\TableGateway\Feature\EventFeature;
 
 use ArrayAccess;
 use MxcCommons\Db\TableGateway\AbstractTableGateway;
-use MxcCommonsEventManager\EventInterface;
+use MxcCommons\EventManager\EventInterface;
 
 class TableGatewayEvent implements EventInterface
 {

@@ -15,6 +15,7 @@ use ReflectionClass;
 use ReflectionParameter;
 use MxcCommons\ServiceManager\Exception\ServiceNotFoundException;
 use MxcCommons\ServiceManager\Factory\AbstractFactoryInterface;
+use MxcCommons\Stdlib\DispatchableInterface;
 
 use function array_map;
 use function class_exists;

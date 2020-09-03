@@ -3,7 +3,6 @@
 namespace MxcCommons\Toolbox\Report;
 
 use MxcCommons\Plugin\Utility\StringUtility;
-use MxcCommons\Config\Factory;
 use MxcCommons\Toolbox\Config\Config;
 
 class ArrayReport

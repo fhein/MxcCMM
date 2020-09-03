@@ -7,9 +7,9 @@
 
 namespace MxcCommons\Validator;
 
-use Interop\Container\ContainerInterface;
+use MxcCommons\Interop\Container\ContainerInterface;
 use MxcCommons\ServiceManager\Config;
-use MxcCommons\ServiceManager\FactoryInterface;
+use MxcCommons\ServiceManager\Factory\FactoryInterface;
 use MxcCommons\ServiceManager\ServiceLocatorInterface;
 
 class ValidatorPluginManagerFactory implements FactoryInterface

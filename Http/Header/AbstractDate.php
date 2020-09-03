@@ -11,17 +11,19 @@ namespace MxcCommons\Http\Header;
 
 use DateTime;
 use DateTimeZone;
-use Exception;
+use MxcCommons\Http\Exception;
+use Throwable;
 
 /**
  * Abstract Date/Time Header
  * Supports headers that have date/time as value
  *
- * @see MxcCommons\Http\Header\Date
- * @see MxcCommons\Http\Header\Expires
- * @see MxcCommons\Http\Header\IfModifiedSince
- * @see MxcCommons\Http\Header\IfUnmodifiedSince
- * @see MxcCommons\Http\Header\LastModified
+ *
+ * @see \MxcCommons\Http\Header\Date
+ * @see \MxcCommons\Http\Header\Expires
+ * @see \MxcCommons\Http\Header\IfModifiedSince
+ * @see \MxcCommons\Http\Header\IfUnmodifiedSince
+ * @see \MxcCommons\Http\Header\LastModified
  *
  * Note for 'Location' header:
  * While RFC 1945 requires an absolute URI, most of the browsers also support relative URI
@@ -163,7 +165,7 @@ abstract class AbstractDate implements HeaderInterface
         if (is_string($date)) {
             try {
                 $date = new DateTime($date, new DateTimeZone('GMT'));
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 throw new Exception\InvalidArgumentException(
                     sprintf('Invalid date passed as string (%s)', (string) $date),
                     $e->getCode(),
@@ -217,7 +219,7 @@ abstract class AbstractDate implements HeaderInterface
         if (is_string($date)) {
             try {
                 $date = new DateTime($date, new DateTimeZone('GMT'));
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 throw new Exception\InvalidArgumentException(
                     sprintf('Invalid Date passed as string (%s)', (string) $date),
                     $e->getCode(),

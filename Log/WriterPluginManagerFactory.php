@@ -11,7 +11,7 @@ namespace MxcCommons\Log;
 
 use MxcCommons\Interop\Container\ContainerInterface;
 use MxcCommons\ServiceManager\Config;
-use MxcCommons\ServiceManager\FactoryInterface;
+use MxcCommons\ServiceManager\Factory\FactoryInterface;
 use MxcCommons\ServiceManager\ServiceLocatorInterface;
 
 class WriterPluginManagerFactory implements FactoryInterface

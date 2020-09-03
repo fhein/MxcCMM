@@ -23,7 +23,7 @@ class Codabar extends AbstractAdapter
 
     /**
      * Checks for allowed characters
-     * @see MxcCommons\Validator\Barcode.AbstractAdapter::checkChars()
+     * @see \MxcCommons\Validator\Barcode.AbstractAdapter::checkChars()
      */
     public function hasValidCharacters($value)
     {

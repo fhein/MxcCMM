@@ -9,9 +9,9 @@
 
 namespace MxcCommons\Db\Adapter;
 
-use Interop\Container\ContainerInterface;
-use MxcCommonsServiceManager\FactoryInterface;
-use MxcCommonsServiceManager\ServiceLocatorInterface;
+use MxcCommons\Interop\Container\ContainerInterface;
+use MxcCommons\ServiceManager\Factory\FactoryInterface;
+use MxcCommons\ServiceManager\ServiceLocatorInterface;
 
 class AdapterServiceFactory implements FactoryInterface
 {

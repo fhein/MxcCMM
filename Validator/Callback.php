@@ -9,7 +9,8 @@
 
 namespace MxcCommons\Validator;
 
-use Exception;
+use MxcCommons\Validator\Exception;
+use Throwable;
 
 class Callback extends AbstractValidator
 {
@@ -142,7 +143,7 @@ class Callback extends AbstractValidator
                 $this->error(self::INVALID_VALUE);
                 return false;
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->error(self::INVALID_CALLBACK);
             return false;
         }

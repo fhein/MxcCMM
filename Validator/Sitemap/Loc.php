@@ -17,7 +17,7 @@ use MxcCommons\Validator\AbstractValidator;
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
  *
- * @see        MxcCommons\Uri\Uri
+ * @see        \MxcCommons\Uri\Uri
  */
 class Loc extends AbstractValidator
 {

@@ -7,9 +7,10 @@
 
 namespace MxcCommons\Uri;
 
-use Exception;
+use Throwable;
 use MxcCommons\Escaper\Escaper;
 use MxcCommons\Validator;
+use MxcCommons\Uri\Exception;
 
 /**
  * Generic URI handler
@@ -828,7 +829,7 @@ class Uri implements UriInterface
     {
         try {
             return $this->toString();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return '';
         }
     }
@@ -1080,7 +1081,7 @@ class Uri implements UriInterface
             return $match[1];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -1280,7 +1281,7 @@ class Uri implements UriInterface
             && isset(static::$defaultPorts[$scheme])
             && ($port == static::$defaultPorts[$scheme])
         ) {
-            return;
+            return null;
         }
 
         return $port;

@@ -9,9 +9,9 @@
 
 namespace MxcCommons\Db\Adapter;
 
-use Interop\Container\ContainerInterface;
-use MxcCommonsServiceManager\AbstractFactoryInterface;
-use MxcCommonsServiceManager\ServiceLocatorInterface;
+use MxcCommons\Interop\Container\ContainerInterface;
+use MxcCommons\ServiceManager\Factory\AbstractFactoryInterface;
+use MxcCommons\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Database adapter abstract service factory.

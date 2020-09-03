@@ -12,7 +12,8 @@ namespace MxcCommons\Db\Adapter\Platform;
 use MxcCommons\Db\Adapter\Driver\DriverInterface;
 use MxcCommons\Db\Adapter\Driver\Oci8\Oci8;
 use MxcCommons\Db\Adapter\Driver\Pdo\Pdo;
-use \MxcCommons\Db\Adapter\Exception\InvalidArgumentException;
+use MxcCommons\Db\Adapter\Exception\InvalidArgumentException;
+use PDO as _PDO;
 
 class Oracle extends AbstractPlatform
 {
@@ -50,7 +51,7 @@ class Oracle extends AbstractPlatform
             || ($driver instanceof Pdo && $driver->getDatabasePlatformName() == 'Oracle')
             || ($driver instanceof Pdo && $driver->getDatabasePlatformName() == 'Sqlite')
             || ($driver instanceof \oci8)
-            || ($driver instanceof PDO && $driver->getAttribute(PDO::ATTR_DRIVER_NAME) == 'oci')
+            || ($driver instanceof PDO && $driver->getAttribute(_PDO::ATTR_DRIVER_NAME) == 'oci')
         ) {
             $this->resource = $driver;
             return $this;

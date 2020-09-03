@@ -14,9 +14,9 @@ use MxcCommons\Uri\UriInterface;
 /**
  * Abstract Location Header
  * Supports headers that have URI as value
- * @see MxcCommons\Http\Header\Location
- * @see MxcCommons\Http\Header\ContentLocation
- * @see MxcCommons\Http\Header\Referer
+ * @see \MxcCommons\Http\Header\Location
+ * @see \MxcCommons\Http\Header\ContentLocation
+ * @see \MxcCommons\Http\Header\Referer
  *
  * Note for 'Location' header:
  * While RFC 1945 requires an absolute URI, most of the browsers also support relative URI

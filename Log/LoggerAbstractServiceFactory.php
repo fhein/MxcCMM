@@ -10,7 +10,7 @@
 namespace MxcCommons\Log;
 
 use MxcCommons\Interop\Container\ContainerInterface;
-use MxcCommons\ServiceManager\AbstractFactoryInterface;
+use MxcCommons\ServiceManager\Factory\AbstractFactoryInterface;
 use MxcCommons\ServiceManager\AbstractPluginManager;
 use MxcCommons\ServiceManager\ServiceLocatorInterface;
 

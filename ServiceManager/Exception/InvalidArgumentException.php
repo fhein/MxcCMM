@@ -8,7 +8,7 @@
 namespace MxcCommons\ServiceManager\Exception;
 
 use InvalidArgumentException as SplInvalidArgumentException;
-use MxcCommons\ServiceManager\AbstractFactoryInterface;
+use MxcCommons\ServiceManager\Factory\AbstractFactoryInterface;
 use MxcCommons\ServiceManager\Initializer\InitializerInterface;
 use MxcCommons\ServiceManager\Factory\FactoryInterface;
 use MxcCommons\ServiceManager\Factory\DelegatorFactoryInterface;

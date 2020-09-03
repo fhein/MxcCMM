@@ -14,7 +14,7 @@ use MxcCommons\Db\Adapter\ParameterContainer;
 use MxcCommons\Db\Adapter\Platform\PlatformInterface;
 use MxcCommons\Db\Adapter\Driver\DriverInterface;
 use MxcCommons\Db\Adapter\Driver\Pdo\Pdo;
-use MxcCommonsStdlib\PriorityList;
+use MxcCommons\Stdlib\PriorityList;
 
 /**
  *

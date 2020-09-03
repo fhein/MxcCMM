@@ -7,6 +7,8 @@
 
 namespace MxcCommons\Http;
 
+use Traversable;
+
 /**
  * Http static client
  */

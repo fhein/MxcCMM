@@ -16,9 +16,9 @@ use MxcCommons\Db\Sql\Delete;
 use MxcCommons\Db\Sql\Insert;
 use MxcCommons\Db\Sql\Select;
 use MxcCommons\Db\Sql\Update;
-use MxcCommonsEventManager\EventManager;
-use MxcCommonsEventManager\EventManagerInterface;
-use MxcCommonsEventManager\EventsCapableInterface;
+use MxcCommons\EventManager\EventManager;
+use MxcCommons\EventManager\EventManagerInterface;
+use MxcCommons\EventManager\EventsCapableInterface;
 
 class EventFeature extends AbstractFeature implements
     EventFeatureEventsInterface,

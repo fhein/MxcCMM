@@ -9,9 +9,10 @@
 
 namespace MxcCommons\Validator;
 
-use Exception;
 use MxcCommons\Stdlib\ArrayUtils;
+use MxcCommons\Validator\Exception;
 use Traversable;
+use Throwable;
 
 class CreditCard extends AbstractValidator
 {
@@ -323,7 +324,7 @@ class CreditCard extends AbstractValidator
                     $this->error(self::SERVICE, $value);
                     return false;
                 }
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $this->error(self::SERVICEFAILURE, $value);
                 return false;
             }

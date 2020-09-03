@@ -128,6 +128,9 @@ class SetCookie implements MultipleHeaderInterface
      */
     protected $encodeValue = true;
 
+    /** @var string  */
+    protected $type;
+
     /**
      * @static
      * @throws Exception\InvalidArgumentException

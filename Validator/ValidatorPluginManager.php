@@ -10,7 +10,7 @@
 
 namespace MxcCommons\Validator;
 
-use Interop\Container\ContainerInterface;
+use MxcCommons\Interop\Container\ContainerInterface;
 use MxcCommons\ServiceManager\AbstractPluginManager;
 use MxcCommons\ServiceManager\Exception\InvalidServiceException;
 use MxcCommons\ServiceManager\Factory\InvokableFactory;

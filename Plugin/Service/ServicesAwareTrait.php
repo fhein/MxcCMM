@@ -4,12 +4,12 @@ namespace MxcCommons\Plugin\Service;
 
 use MxcCommons\Interop\Container\ContainerInterface;
 
-class ServicesAwareTrait
+trait ServicesAwareTrait
 {
     /** @var ContainerInterface */
     protected  $services;
 
-    public function setDatabase(ContainerInterface $services)
+    public function setServices(ContainerInterface $services)
     {
         $this->services = $services;
     }

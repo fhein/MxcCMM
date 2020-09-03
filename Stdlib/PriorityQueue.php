@@ -182,7 +182,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Unserialize a string into a PriorityQueue object
      *
-     * Serialization format is compatible with {@link MxcCommons\Stdlib\SplPriorityQueue}
+     * Serialization format is compatible with {@link \MxcCommons\Stdlib\SplPriorityQueue}
      *
      * @param  string $data
      * @return void

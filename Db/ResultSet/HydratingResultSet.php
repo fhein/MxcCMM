@@ -10,9 +10,9 @@
 namespace MxcCommons\Db\ResultSet;
 
 use ArrayObject;
-use MxcCommonsHydrator\ArraySerializable;
-use MxcCommonsHydrator\ArraySerializableHydrator;
-use MxcCommonsHydrator\HydratorInterface;
+use MxcCommons\Hydrator\ArraySerializable;
+use MxcCommons\Hydrator\ArraySerializableHydrator;
+use MxcCommons\Hydrator\HydratorInterface;
 
 class HydratingResultSet extends AbstractResultSet
 {

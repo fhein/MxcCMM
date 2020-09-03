@@ -13,6 +13,8 @@
 namespace MxcCommons\ServiceManager;
 
 use Exception;
+use MxcCommons\EventManager\EventManager;
+use MxcCommons\EventManager\SharedEventManager;
 use MxcCommons\Interop\Container\ContainerInterface;
 use MxcCommons\Interop\Container\Exception\ContainerException;
 use ProxyManager\Configuration as ProxyConfiguration;
@@ -388,7 +390,6 @@ class ServiceManager implements ServiceLocatorInterface
         if (method_exists($object, 'setServices')) {
             $object->setServices($this);
         }
-
         if (method_exists($object, 'setLog')) {
             $object->setLog($this->get('logger'));
         }
@@ -400,6 +401,9 @@ class ServiceManager implements ServiceLocatorInterface
         }
         if (method_exists($object, 'setClassConfig')) {
             $object->setClassConfig($this->getClassConfig($object));
+        }
+        if (method_exists($object, 'setEventManager')) {
+            $object->setEventManager(new EventManager($this->get('shared_events')));
         }
         if (method_exists($object, 'init')) {
             $object->init();

@@ -2,6 +2,7 @@
 
 namespace MxcCommons\Plugin\Service;
 
+use MxcCommons\EventManager\SharedEventManager;
 use MxcCommons\Plugin\Database\AttributeManager;
 use MxcCommons\Plugin\Database\BulkOperation;
 use MxcCommons\Plugin\Database\SchemaManager;
@@ -95,6 +96,7 @@ class ServicesFactory
             $services->configure($config['services']);
         }
         $config['plugin_config_path'] = $configDir;
+        $services->setService('shared_events', new SharedEventManager());
         $services->setService('config', $config);
         $services->setService('services', $services);
         $services->setAllowOverride(false);
