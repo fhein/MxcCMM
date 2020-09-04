@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -547,6 +548,7 @@ abstract class AbstractTableGateway implements TableGatewayInterface
         $this->sql = clone $this->sql;
         if (is_object($this->table)) {
             // *** PhpStorm detects an error here (PhpStorm bug known since 2015)
+            /** @noinspection Annotator */
             $this->table = clone $this->table;
         } elseif (is_array($this->table)
             && count($this->table) == 1
