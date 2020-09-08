@@ -69,8 +69,8 @@ class MediaTool implements AugmentedObject
 
         $size = getimagesize($url);
         $size = (false === $size) ? [ 0, 0 ] : $size;
-        $media->setWidth($size{0});
-        $media->setHeight($size{1});
+        $media->setWidth($size[0]);
+        $media->setHeight($size[1]);
 
         return $media;
     }

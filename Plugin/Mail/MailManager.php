@@ -8,10 +8,14 @@ use MxcCommons\Toolbox\Config\Config;
 use Shopware\Components\Plugin\Context\InstallContext;
 use Shopware\Components\Plugin\Context\UninstallContext;
 use Shopware\Models\Mail\Mail;
+use Shopware\Models\Order\Status;
 
 class MailManager implements AugmentedObject
 {
     use ModelManagerAwareTrait;
+
+    CONST MODE_ALL = 0;
+    const MODE_STATUS = 1;
 
     protected $config;
     protected $repository;
@@ -43,6 +47,7 @@ class MailManager implements AugmentedObject
         if (! $mail instanceof Mail) return null;
 
         $template = [
+            'name'         => $mail->getName(),
             'type'         => $mail->getMailtype(),
             'is_html'      => $mail->isHtml(),
             'content_text' => $mail->getContent(),
@@ -52,17 +57,22 @@ class MailManager implements AugmentedObject
             'subject'      => $mail->getSubject(),
             'context'      => $mail->getContext(),
         ];
+        $status = $mail->getStatus();
+        if ($status) {
+            $template['status'] = $status->getId();
+        }
         if ($ignoreContext) {
             unset($template['context']);
         }
         return $template;
     }
 
-    public function getMailTemplates(bool $ignoreContext = true)
+    public function _getMailTemplates(int $mode, bool $ignoreContext = true)
     {
         $mails = $this->getRepository()->findAll();
         $templates = null;
         foreach ($mails as $mail) {
+            if ($mode === self::MODE_STATUS && ! $mail->getStatus()) continue;
             $name = $mail->getName();
             $template = $this->getMailTemplate($mail, $ignoreContext);
             if ($template !== null) {
@@ -70,6 +80,17 @@ class MailManager implements AugmentedObject
             }
         }
         return $templates;
+    }
+
+
+    public function getStatusMailTemplates(bool $ignoreContext = true)
+    {
+        return $this->_getMailTemplates(self::MODE_STATUS, $ignoreContext);
+    }
+
+    public function getMailTemplates(bool $ignoreContext = true)
+    {
+        return $this->_getMailTemplates(self::MODE_ALL, $ignoreContext);
     }
 
     public function setMailTemplates(array $templates)
@@ -126,6 +147,13 @@ class MailManager implements AugmentedObject
         $mail->setMailType($setting);
         $setting = @$templateDefinition['context'] ?? null;
         $mail->setContext($setting);
+        $statusId = @$templateDefinition['status'] ?? null;
+        if ($statusId !== null) {
+            /** @var Status $status */
+            $status = $this->modelManager->getRepository(Status::class)->find($statusId);
+            // note: status will be null, if Status object does not exist
+            $mail->setStatus([$status]);
+        }
     }
 
     protected function getRepository()

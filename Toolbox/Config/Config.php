@@ -12,4 +12,13 @@ class Config
         file_put_contents($fn, $text);
     }
 
+    public static function fromFile(string $fn)
+    {
+        $config = [];
+        if (file_exists($fn)) {
+            $config = include $fn;
+        }
+        return $config;
+    }
+
 }
