@@ -152,13 +152,14 @@ class ArticleTool implements AugmentedObject
     /**
      * Write an attribute value to supplied detail
      *
-     * @param Detail $detail
+     * @param Detail|int $detail
      * @param string $attribute
      * @param $value
      * @throws DBALException
      */
-    public static function setDetailAttribute(Detail $detail, string $attribute, $value)
+    public static function setDetailAttribute($detail, string $attribute, $value)
     {
+        $detailId = $detail instanceof Detail ? $detail->getId() : $detail;
         $connection = Shopware()->Container()->get('dbal_connection');
         $sql = sprintf(
                 "UPDATE s_articles_attributes attr 
@@ -168,13 +169,13 @@ class ArticleTool implements AugmentedObject
         );
         /** @var Statement $statement */
         $statement = $connection->prepare($sql);
-        $statement->execute([ 'detailId' => $detail->getId(), 'value' => $value ]);
+        $statement->execute([ 'detailId' => $detailId, 'value' => $value ]);
     }
 
-    public static function getDetailAttributes(Detail $detail) {
-
+    public static function getDetailAttributes($detail) {
+        $detailId = $detail instanceof Detail ? $detail->getId() : $detail;
         return Shopware()->Db()->fetchRow(
-            'SELECT * FROM s_articles_attributes attr WHERE attr.articledetailsID = ?', array($detail->getId())
+            'SELECT * FROM s_articles_attributes attr WHERE attr.articledetailsID = ?', [$detailId]
         );
     }
 
