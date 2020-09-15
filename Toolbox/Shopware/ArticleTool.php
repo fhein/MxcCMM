@@ -185,7 +185,6 @@ class ArticleTool implements AugmentedObject
         return $attributes[$attribute];
     }
 
-
     // Deletes a Shopware article and all related data
     // Important: This function does not cover additional tables as introduced by SwagBundle for example
     public static function deleteArticle($article)
