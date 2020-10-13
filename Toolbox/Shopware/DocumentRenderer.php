@@ -2,50 +2,34 @@
 
 namespace MxcCommons\Toolbox\Shopware;
 
-use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
-use MxcCommons\Plugin\Service\ServicesAwareTrait;
+use MxcCommons\Plugin\Service\DatabaseAwareTrait;
 use MxcCommons\ServiceManager\AugmentedObject;
-use Shopware\Models\Order\Order;
 use Shopware_Components_Document;
 use DateTime;
 
 class DocumentRenderer implements AugmentedObject
 {
-    use ServicesAwareTrait;
-    use ModelManagerAwareTrait;
+    use DatabaseAwareTrait;
 
-    private $documentTypes = [
-        'invoice'       => 1,
-        'delivery_note' => 2,
-        'credit'        => 3,
-        'cancellation'  => 4,
-    ];
+    const DOC_TYPE_INVOICE       = 1;
+    const DOC_TYPE_DELIVERY_NOTE = 2;
+    const DOC_TYPE_CREDIT        = 3;
+    const DOC_TYPE_CANCELLATION  = 4;
 
-    public function createDocument(Order $order, string $type, bool $forceCreation = false, DateTime $date = null, DateTime $deliveryDate = null)
+    public function createDocument(int $orderId, int $typeId, bool $forceCreation = false, DateTime $date = null, DateTime $deliveryDate = null)
     {
-        $typeId = $this->documentTypes[$type];
-
-        /** @var \Shopware\Models\Order\Document\Document[] $documents */
-        $documents = $order->getDocuments();
-
         if ($forceCreation) {
-            $this->renderDocument($order, $type, $date, $deliveryDate);
+            $this->renderDocument($orderId, $typeId, $date, $deliveryDate);
             return;
         }
-
-        $alreadyCreated = false;
-        foreach ($documents as $document) {
-            if ($document->getTypeId() === $typeId) {
-                $alreadyCreated = true;
-                break;
-            }
-        }
-        if ($alreadyCreated === false) {
-            $this->renderDocument($order, $type, $date, $deliveryDate);
-        }
+        $hasDocument = $this->db->fetchOne(
+            'SELECT count(id) FROM s_order_documents WHERE orderID = :orderId AND type = :typeId',
+            [ 'orderId' => $orderId, 'typeId' => $typeId]);
+        if ($hasDocument) return;
+        $this->renderDocument($orderId, $typeId, $date, $deliveryDate);
     }
 
-    public function renderDocument(Order $order, string $type, DateTime $date = null, DateTime $deliveryDate = null)
+    public function renderDocument(int $orderId, int $typeId, DateTime $date = null, DateTime $deliveryDate = null)
     {
         if ($date === null) {
             $date = date('d.m.Y');
@@ -54,14 +38,12 @@ class DocumentRenderer implements AugmentedObject
             $deliveryDate = date('d.m.Y');
         }
 
-        $type = $this->documentTypes[$type];
-
-        $document = Shopware_Components_Document::initDocument($order->getId(), $type,
+        $document = Shopware_Components_Document::initDocument($orderId, $typeId,
             [
-                'netto'                   => $order->getTaxFree(),
+                'netto'                   => false,
                 'date'                    => $date,
                 'delivery_date'           => $deliveryDate,
-                'shippingCostsAsPosition' => (int) $type !== 2,
+                'shippingCostsAsPosition' => (int) $typeId !== 2,
                 '_renderer'               => 'pdf',
                 '_preview'                => false,
                 'docComment'              => 'Automatically created.',
