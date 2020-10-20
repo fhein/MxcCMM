@@ -23,6 +23,34 @@ class MailTool implements AugmentedObject
         $this->documentRenderer = $documentRenderer;
     }
 
+    public function sendStatusMail(int $orderId, int $statusId, array $documentAttachments = [])
+    {
+        $mail = $this->renderStatusMail($orderId, $statusId);
+        foreach ($documentAttachments as $typeId) {
+            $this->attachOrderDocument($mail, $orderId, $typeId);
+        }
+        $this->swSendStatusMail($mail);
+    }
+
+    public function sendNotificationMail(int $orderId, array $context, array $addresses, array $documentAttachments = [])
+    {
+        $mail = Shopware()->TemplateMail()->createMail($context['mailTemplate'], $context);
+        foreach ($documentAttachments as $typeId) {
+            $this->attachOrderDocument($mail, $orderId, $typeId);
+        }
+        foreach ($addresses['to'] as $to) {
+            $mail->addTo($to);
+        }
+        $mail->clearFrom();
+        $from = $addresses['from'];
+        $mail->setFrom($from['email'], $from['name']);
+        if (isset($context['mailSubject'])) {
+            $mail->clearSubject();
+            $mail->setSubject($context['mailSubject']);
+        }
+        $mail->send();
+    }
+
     public function renderStatusMail(int $orderId, int $statusId)
     {
         $mail = null;
@@ -40,10 +68,10 @@ class MailTool implements AugmentedObject
         $mail->addAttachment($this->createAttachment($orderId, $typeId));
     }
 
-    public function sendStatusMail(Enlight_Components_Mail $mail)
+    public function swSendStatusMail(Enlight_Components_Mail $mail)
     {
         $orderManager = Shopware()->Modules()->Order();
-        $orderManager->sendStatusMail($mail);
+        return $orderManager->sendStatusMail($mail);
     }
 
     public function getDocumentPath(int $orderId, int $typeId)
