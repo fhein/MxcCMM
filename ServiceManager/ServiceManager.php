@@ -17,6 +17,7 @@ use MxcCommons\EventManager\EventManager;
 use MxcCommons\EventManager\SharedEventManager;
 use MxcCommons\Interop\Container\ContainerInterface;
 use MxcCommons\Interop\Container\Exception\ContainerException;
+use MxcCommons\MxcCommons;
 use ProxyManager\Configuration as ProxyConfiguration;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use ProxyManager\FileLocator\FileLocator;
@@ -403,7 +404,10 @@ class ServiceManager implements ServiceLocatorInterface
             $object->setClassConfig($this->getClassConfig($object));
         }
         if (method_exists($object, 'setEventManager')) {
-            $object->setEventManager(new EventManager($this->get('shared_events')));
+            // make sure that the SharedEventManager comes from MxcCommons
+            // so the SharedEventManager is the same object for all plugins
+            $mxcCommons = MxcCommons::getServices();
+            $object->setEventManager(new EventManager($mxcCommons->get('shared_events')));
         }
         if (method_exists($object, 'init')) {
             $object->init();

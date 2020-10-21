@@ -16,6 +16,7 @@ use MxcCommons\Log\LoggerServiceFactory;
 use MxcCommons\ServiceManager\ServiceManager;
 use MxcCommons\Toolbox\Shopware\DocumentRenderer;
 use MxcCommons\Toolbox\Shopware\MailTool;
+use MxcCommons\Toolbox\Shopware\OrderTool;
 
 class ServicesFactory
 {
@@ -34,6 +35,7 @@ class ServicesFactory
             MailManager::class,
             MailTool::class,
             DocumentRenderer::class,
+            OrderTool::class,
         ],
         'delegators' => [
             Logger::class => [
