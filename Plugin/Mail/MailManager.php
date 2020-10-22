@@ -50,12 +50,12 @@ class MailManager implements AugmentedObject
             'name'         => $mail->getName(),
             'type'         => $mail->getMailtype(),
             'is_html'      => $mail->isHtml(),
-            'content_text' => $mail->getContent(),
-            'content_html' => $mail->getContentHtml(),
             'from_mail'    => $mail->getFromMail(),
             'from_name'    => $mail->getFromName(),
             'subject'      => $mail->getSubject(),
             'context'      => $mail->getContext(),
+            'content_text' => $mail->getContent(),
+            'content_html' => $mail->getContentHtml(),
         ];
         $status = $mail->getStatus();
         if ($status) {
@@ -82,7 +82,6 @@ class MailManager implements AugmentedObject
         return $templates;
     }
 
-
     public function getStatusMailTemplates(bool $ignoreContext = true)
     {
         return $this->_getMailTemplates(self::MODE_STATUS, $ignoreContext);
@@ -91,6 +90,14 @@ class MailManager implements AugmentedObject
     public function getMailTemplates(bool $ignoreContext = true)
     {
         return $this->_getMailTemplates(self::MODE_ALL, $ignoreContext);
+    }
+
+    public function deleteMailTemplate(string $name)
+    {
+        $mail = $this->getRepository()->findOneBy(['name' => $name]);
+        if (empty($mail)) return;
+        $this->modelManager->remove($mail);
+        $this->modelManager->flush();
     }
 
     public function setMailTemplates(array $templates)
