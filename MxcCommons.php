@@ -4,7 +4,6 @@ namespace MxcCommons;
 
 use MxcCommons\Plugin\Plugin;
 use MxcCommons\Plugin\Service\ServicesFactory;
-use Symfony\Component\Console\Application;
 
 class MxcCommons extends Plugin
 {

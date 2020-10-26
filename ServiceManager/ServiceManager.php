@@ -14,7 +14,6 @@ namespace MxcCommons\ServiceManager;
 
 use Exception;
 use MxcCommons\EventManager\EventManager;
-use MxcCommons\EventManager\SharedEventManager;
 use MxcCommons\Interop\Container\ContainerInterface;
 use MxcCommons\Interop\Container\Exception\ContainerException;
 use MxcCommons\MxcCommons;

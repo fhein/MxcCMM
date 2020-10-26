@@ -41,13 +41,7 @@ class Plugin extends Base
         if ($function === 'uninstall' || $function === 'deactivate') {
             $listeners = array_reverse($listeners);
         }
-        $pluginListeners = [];
-        foreach ($listeners as $service) {
-            if ($services->has($service)) {
-                $pluginListeners[] = $services->get($service);
-            }
-        }
-        return $pluginListeners;
+        return $listeners;
     }
 
     /**
@@ -64,6 +58,8 @@ class Plugin extends Base
             $services->setService('plugin', $plugin);
             $pluginListeners = $this->getListeners($function, $services);
             foreach ($pluginListeners as $listener) {
+                if (! $services->has($listener)) continue;
+                $listener = $services->get($listener);
                 if (method_exists($listener, $function)) {
                     $result = $listener->$function($param);
                     if ($result === false) break;

@@ -9,7 +9,7 @@ class OrderTool implements AugmentedObject
 {
     use DatabaseAwareTrait;
 
-    public function getOrdersByStatus(int $statusId)
+    public function getOrdersByOrderStatus(int $statusId)
     {
         return $this->db->fetchAll('
             SELECT 
@@ -41,7 +41,23 @@ class OrderTool implements AugmentedObject
         ]);
     }
 
-    public function getOrderIdsByStatus(int $statusId)
+    public function getOrdersByStatus(int $statusId)
+    {
+        return $this->db->fetchAll('
+            SELECT 
+                * 
+            FROM 
+                s_order o 
+            LEFT JOIN 
+                s_order_attributes oa ON oa.orderID = o.id 
+            WHERE 
+                o.cleared = :status OR o.status = :status 
+        ', [
+            'status' => $statusId,
+        ]);
+    }
+
+    public function getOrderIdsByOrderStatus(int $statusId)
     {
         return $this->db->fetchCol(
             'SELECT o.id FROM s_order o WHERE o.status = :orderStatus',
@@ -54,6 +70,14 @@ class OrderTool implements AugmentedObject
         return $this->db->fetchCol(
             'SELECT o.id FROM s_order o WHERE o.cleared = :paymentStatus',
             [ 'paymentStatus' => $statusId,]
+        );
+    }
+
+    public function getOrderIdsByStatus(int $statusId)
+    {
+        return $this->db->fetchCol(
+            'SELECT o.id FROM s_order o WHERE o.cleared = :status OR o.status = :status',
+            [ 'status' => $statusId,]
         );
     }
 
@@ -118,5 +142,13 @@ class OrderTool implements AugmentedObject
             ['paymentId' => $paymentId]
         );
         return $payment['name'] == 'prepayment';
+    }
+
+    public function isPaypal(int $paymentId)
+    {
+        $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
+            ['paymentId' => $paymentId]
+        );
+        return $payment['name'] == 'SwagPaymentPayPalUnified';
     }
 }

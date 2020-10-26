@@ -6,7 +6,7 @@ use MxcCommons\EventManager\SharedEventManager;
 use MxcCommons\Plugin\Database\AttributeManager;
 use MxcCommons\Plugin\Database\BulkOperation;
 use MxcCommons\Plugin\Database\SchemaManager;
-use MxcCommons\Plugin\Mail\MailManager;
+use MxcCommons\Plugin\Mail\MailTemplateManager;
 use MxcCommons\Plugin\Shopware\ConfigurationFactory;
 use MxcCommons\Plugin\Shopware\ShopwareServicesFactory;
 use MxcCommons\Plugin\Utility\StringUtility;
@@ -32,7 +32,7 @@ class ServicesFactory
             BulkOperation::class,
             SchemaManager::class,
             AttributeManager::class,
-            MailManager::class,
+            MailTemplateManager::class,
             MailTool::class,
             DocumentRenderer::class,
             OrderTool::class,

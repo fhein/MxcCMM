@@ -4,34 +4,17 @@ namespace MxcCommons\Plugin\Mail;
 
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
 use MxcCommons\ServiceManager\AugmentedObject;
-use MxcCommons\Toolbox\Config\Config;
-use Shopware\Components\Plugin\Context\InstallContext;
-use Shopware\Components\Plugin\Context\UninstallContext;
 use Shopware\Models\Mail\Mail;
 use Shopware\Models\Order\Status;
 
-class MailManager implements AugmentedObject
+class MailTemplateManager implements AugmentedObject
 {
     use ModelManagerAwareTrait;
 
     CONST MODE_ALL = 0;
     const MODE_STATUS = 1;
 
-    protected $config;
     protected $repository;
-
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
-    public function install(InstallContext $context)
-    {
-        foreach ($this->config as $templateDefinition) {
-            $this->installMailTemplate($templateDefinition);
-        }
-        $this->modelManager->flush();
-    }
 
     // get the configuration data of a mail template
     //
@@ -104,25 +87,6 @@ class MailManager implements AugmentedObject
     {
         foreach ($templates as $templateDefinition) {
             $this->installMailTemplate($templateDefinition);
-        }
-        $this->modelManager->flush();
-    }
-
-    public function uninstall(UninstallContext $context)
-    {
-        if ($context->keepUserData()) {
-            return true;
-        }
-
-        foreach ($this->config as $templateDefinition) {
-            $name = @$templateDefinition['name'];
-            if (empty($name)) {
-                continue;
-            }
-            $mail = $this->getRepository()->findOneBy(['name' => $name]);
-            if ($mail !== null) {
-                $this->modelManager->remove($mail);
-            }
         }
         $this->modelManager->flush();
     }
