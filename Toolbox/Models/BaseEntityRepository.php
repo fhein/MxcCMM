@@ -28,12 +28,6 @@ class BaseEntityRepository extends EntityRepository implements Enlight_Hook
     /** @var array */
     protected $statements = [];
 
-    public function __construct($em, ClassMetadata $class)
-    {
-        parent::__construct($em, $class);
-        $this->log = MxcCommons::getServices()->get('logger');
-    }
-
     public function __call($method, $arguments)
     {
         switch (true) {
