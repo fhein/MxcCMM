@@ -40,6 +40,9 @@ class CategoryTool implements AugmentedObject
         }
     }
 
+    public function disableEmptyProductCategories()
+    {}
+
     public function removeEmptyProductCategories(Category $swCategory)
     {
         $ids = array_column($this->getRepository()->getFullChildrenList($swCategory->getId()), 'id');

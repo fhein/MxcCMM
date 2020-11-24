@@ -9,16 +9,19 @@ class TaxTool
 {
     private static $vatConfig = [
         [
-            'start' => '01.01.2000 00:00:00',
-            'vat'   => 19.0,
+            'start'      => '01.01.2000 00:00:00',
+            'vat'        => 19.0,
+            'vatReduced' => 7.0,
         ],
         [
-            'start' => '30.06.2020 00:00:00',
-            'vat'   => 16.0,
+            'start'      => '30.06.2020 00:00:00',
+            'vat'        => 16.0,
+            'vatReduced' => 5.0,
         ],
         [
-            'start' => '31.12.2020 00:00:00',
-            'vat'   => 19.0,
+            'start'      => '31.12.2020 00:00:00',
+            'vat'        => 19.0,
+            'vatReduced' => 7.0,
         ],
     ];
 
@@ -40,7 +43,7 @@ class TaxTool
         return $tax;
     }
 
-    public static function getCurrentVatPercentage()
+    public static function getCurrentVatPercentage(bool $reduced = false)
     {
         $vat = self::$currentVatPercentage;
         if ($vat !== null) return $vat;
@@ -49,7 +52,7 @@ class TaxTool
         foreach (self::$vatConfig as $vatSetting) {
             $start = DateTimeImmutable::createFromFormat('d.m.Y H:i:s', $vatSetting['start']);
             if ($start < $currentTime) {
-                $vat = $vatSetting['vat'];
+                $vat = $reduced ? $vatSetting['vatReduced'] : $vatSetting['vat'];
             }
         }
         self::$currentVatPercentage = $vat;
