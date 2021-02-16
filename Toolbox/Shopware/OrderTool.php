@@ -13,6 +13,16 @@ class OrderTool implements AugmentedObject
     use DatabaseAwareTrait;
     use ModelManagerAwareTrait;
 
+    const KLARNA_PAYMENTS = [
+        'bestit_klarna_payments_pay_now',
+        'bestit_klarna_payments_pay_later',
+        'bestit_klarna_payments_slice_it',
+        'bestit_klarna_payments_instant_shopping',
+        'bestit_klarna_payments_direct_debit',
+        'bestit_klarna_payments_direct_bank_transfer',
+        'bestit_klarna_payments_card',
+    ];
+
     public function getOrdersByOrderStatus(int $statusId)
     {
         return $this->db->fetchAll('
@@ -156,7 +166,7 @@ class OrderTool implements AugmentedObject
         );
     }
 
-    public function isPrepayment(int $paymentId)
+    public function isPrepayment(int $paymentId) : bool
     {
         $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
             ['paymentId' => $paymentId]
@@ -164,11 +174,30 @@ class OrderTool implements AugmentedObject
         return $payment['name'] == 'prepayment';
     }
 
-    public function isPaypal(int $paymentId)
+    public function isPaypal(int $paymentId) : bool
     {
         $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
             ['paymentId' => $paymentId]
         );
         return $payment['name'] == 'SwagPaymentPayPalUnified';
+    }
+
+    public function isKlarna(int $paymentId) : bool
+    {
+        $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
+            ['paymentId' => $paymentId]
+        );
+        return in_array($payment['name'], self::KLARNA_PAYMENTS);
+    }
+
+    public function getPaymentProvider(int $paymentId)
+    {
+        $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
+            ['paymentId' => $paymentId]
+        );
+        if ($payment['name'] == 'prepayment') return 'Prepayment';
+        if (in_array($payment['name'], self::KLARNA_PAYMENTS)) return 'Klarna';
+        if ($payment['name'] == 'SwagPaymentPayPalUnified') return 'Paypal';
+        return null;
     }
 }
