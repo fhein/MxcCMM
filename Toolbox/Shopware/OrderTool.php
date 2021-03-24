@@ -174,20 +174,21 @@ class OrderTool implements AugmentedObject
         return $payment['name'] == 'prepayment';
     }
 
-    public function isPaypal(int $paymentId) : bool
-    {
+    public function getPaymentName(int $paymentId): string{
         $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
             ['paymentId' => $paymentId]
         );
-        return $payment['name'] == 'SwagPaymentPayPalUnified';
+        return $payment['name'];
+    }
+
+    public function isPaypal(int $paymentId) : bool
+    {
+        return $this->getPaymentName($paymentId) == 'SwagPaymentPayPalUnified';
     }
 
     public function isKlarna(int $paymentId) : bool
     {
-        $payment = $this->db->fetchRow('SELECT * FROM s_core_paymentmeans p WHERE p.id = :paymentId',
-            ['paymentId' => $paymentId]
-        );
-        return in_array($payment['name'], self::KLARNA_PAYMENTS);
+        return in_array($$this->getPaymentName($paymentId), self::KLARNA_PAYMENTS);
     }
 
     public function getPaymentProvider(int $paymentId)
