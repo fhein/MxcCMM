@@ -188,7 +188,7 @@ class OrderTool implements AugmentedObject
 
     public function isKlarna(int $paymentId) : bool
     {
-        return in_array($$this->getPaymentName($paymentId), self::KLARNA_PAYMENTS);
+        return in_array($this->getPaymentName($paymentId), self::KLARNA_PAYMENTS);
     }
 
     public function getPaymentProvider(int $paymentId)
